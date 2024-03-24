@@ -16,6 +16,20 @@
             </div>
         </div> --}}
         <!-- /Search -->
+        <h6 class="my-auto">
+            @foreach ($breadcrumb as $key => $item)
+                @if ($item['link'] == '')
+                    <a class="text-muted fw-light" href="#">
+                    @else
+                        <a class="" href="{{ $item['link'] }}">
+                @endif
+                {{ $item['nama'] }}
+                </a>
+                @if (!$loop->last)
+                    /
+                @endif
+            @endforeach
+        </h6>
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- Place this tag where you want the button to render. -->

@@ -5,19 +5,16 @@
             <script>
                 document.write(new Date().getFullYear());
             </script>
-            , made with ❤️ by
-            <a href="https://themeselection.com" target="_blank" class="footer-link fw-medium">ThemeSelection</a>
+            <a href="/" target="_blank" class="footer-link fw-medium">SIPO @Kota Kupang</a>
         </div>
         <div class="d-none d-lg-inline-block">
-            <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-            <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More
-                Themes</a>
+            <a href="https://kupangkota.go.id/" class="footer-link me-4" target="_blank">kupangkota.go.id</a>
+            <a href="https://sodamolekv2.kupangkota.go.id/" target="_blank" class="footer-link me-4">sodamolek
+                <span class="text-danger"><sup>v2</sup></span></a>
 
-            <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
-                target="_blank" class="footer-link me-4">Documentation</a>
+            <a href="https://kabashoax.kupangkota.go.id/" target="_blank" class="footer-link me-4">kabas hoax</a>
 
-            <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank"
-                class="footer-link">Support</a>
+            <a href="https://ppid.kupangkota.go.id/" target="_blank" class="footer-link">ppid</a>
         </div>
     </div>
 </footer>

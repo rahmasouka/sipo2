@@ -48,7 +48,7 @@
             </a>
         </li>
         <li class="menu-item {{ $link == 'pelaku' ? 'active' : '' }}">
-            <a href="/satuan" class="menu-link">
+            <a href="/pelaku" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-network-chart"></i>
                 <div data-i18n="Email">Pelaku</div>
             </a>

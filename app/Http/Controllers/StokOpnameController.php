@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Batch;
-use App\Models\Obat;
+use App\Models\StokOpname;
 use Illuminate\Http\Request;
 
-class BatchController extends Controller
+class StokOpnameController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class BatchController extends Controller
      */
     public function index()
     {
-        $batch = Batch::join('obat', 'obat.obat_id', 'batch.obat_id')->where(['batch.deleted_at' => null])->get();
+        $obat = StokOpname::get();
 
         $breadcrumb = [
             [
@@ -24,18 +24,19 @@ class BatchController extends Controller
             ],
             [
                 'link' => '',
-                'nama' => 'Data Batch Obat'
+                'nama' => 'Stok Opname'
             ]
         ];
 
         $data = [
-            'title' => 'Batch',
-            'link' => 'batch',
+            'title' => 'Stok Opname',
+            'link' => 'stok-opname',
             'breadcrumb' => $breadcrumb,
-            'obat' => Obat::where(['deleted_at' => null])->get(),
-            'result' => $batch,
+            'satuan' => StokOpname::where(['deleted_at' => null])->get(),
+            'result' => $obat,
+            'batch' => Batch::join('obat', 'obat.obat_id', 'batch.obat_id')->where(['batch.deleted_at' => null])->get(),
         ];
-        return view('batch.index', $data);
+        return view('stok-opname.index', $data);
     }
 
     /**
@@ -56,17 +57,7 @@ class BatchController extends Controller
      */
     public function store(Request $request)
     {
-        Batch::create([
-            'obat_id' => $request->nama_obat,
-            'kode_batch' => $request->kode_batch,
-            'expired' => $request->expired,
-            'jenis' => $request->jenis,
-            'keterangan' => $request->keterangan,
-            'tanggal_pengadaan' => $request->tanggal_pengadaan,
-            'tahun_pengadaan' => $request->tahun_pengadaan,
-        ]);
-
-        return redirect('/batch')->with('success', 'Berhasil disimpan');
+        //
     }
 
     /**
@@ -77,8 +68,7 @@ class BatchController extends Controller
      */
     public function show($id)
     {
-        $batch = Batch::where(['deleted_at' => null, 'batch_id' => $id])->first();
-        return json_encode($batch);
+        //
     }
 
     /**
@@ -101,17 +91,7 @@ class BatchController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Batch::where(['batch_id' => $id])->update([
-            'obat_id' => $request->nama_obat,
-            'kode_batch' => $request->kode_batch,
-            'expired' => $request->expired,
-            'jenis' => $request->jenis,
-            'keterangan' => $request->keterangan,
-            'tanggal_pengadaan' => $request->tanggal_pengadaan,
-            'tahun_pengadaan' => $request->tahun_pengadaan,
-        ]);
-
-        return redirect('/batch')->with('success', 'Berhasil diedit');
+        //
     }
 
     /**
@@ -123,11 +103,5 @@ class BatchController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function delete($id)
-    {
-        Batch::destroy($id);
-        return true;
     }
 }

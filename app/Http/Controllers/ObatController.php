@@ -15,7 +15,8 @@ class ObatController extends Controller
      */
     public function index()
     {
-        $obat = Obat::where(['deleted_at' => null])->get();
+        $obat = Obat::join("satuan", "satuan.satuan_id", "obat.satuan_id")
+            ->where(['obat.deleted_at' => null])->get();
 
         $breadcrumb = [
             [

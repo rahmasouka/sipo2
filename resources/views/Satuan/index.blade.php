@@ -5,8 +5,8 @@
         <button class="btn btn-primary btn-xs mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah"
             style="border-radius: 3px; font-size: 10px"><i class="bx bx-plus"></i>
             Tambah</button>
-        <button class="btn btn-secondary btn-xs mb-3" style="border-radius: 3px; font-size: 10px"><i
-                class="bx bx-printer"></i>&nbsp;
+        <button class="btn btn-secondary btn-xs mb-3 btn-cetak" data-namafile="{{ $link . '-' . date('d-m-Y H-i-s') }}"
+            style="border-radius: 3px; font-size: 10px"><i class="bx bx-printer"></i>&nbsp;
             Cetak</button>
         <div class="mb-3">
             <i class="text-danger">*) Input data satuan pada form berikut ini</i>
@@ -19,7 +19,7 @@
                         <tr>
                             <th class="align-middle">No</th>
                             <th class="align-middle">Nama Satuan</th>
-                            <th class="align-middle">Keterangan</th>
+                            <th class="align-middle text-start">Keterangan</th>
                             <th class="align-middle">
                                 aksi
                             </th>
@@ -30,7 +30,7 @@
                             <tr>
                                 <td style="width: 20px !important">{{ $key = $key + 1 }}</td>
                                 <td>{{ $v->nama_satuan }}</td>
-                                <td>{{ $v->keterangan }}</td>
+                                <td class="text-start">{{ $v->keterangan }}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -142,7 +142,7 @@
                         $('#nama_satuan').val(data.nama_satuan);
                         $('#keterangan').val(data.keterangan);
                         $('#form_edit').attr('action', "/{{ $link }}/" + data
-                        .satuan_id);
+                            .satuan_id);
                         $('#modalEdit').modal('show');
                     },
                     error: function(jqXHR, textStatus, errorThrown) {

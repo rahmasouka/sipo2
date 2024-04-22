@@ -17,13 +17,15 @@
                 <table class="table table-striped datatable_init">
                     <thead>
                         <tr>
-                            <th class="align-middle">No</th>
-                            <th class="align-middle">Nama Obat</th>
-                            <th class="align-middle">Kode Batch</th>
-                            <th class="align-middle">Expired</th>
-                            <th class="align-middle">Jenis</th>
-                            <th class="align-middle">Keterangan</th>
-                            <th class="align-middle">Pengadaan
+                            <th class="align-middle text-start">No</th>
+                            <th class="align-middle text-start">Nama Obat
+                                <div class="text-muted fw-light" style="font-size: 10px !important">Kode Obat</div>
+                            </th>
+                            <th class="align-middle text-start">Kode Batch</th>
+                            <th class="align-middle text-start">Expired</th>
+                            <th class="align-middle text-start">Jenis</th>
+                            <th class="align-middle text-start">Keterangan</th>
+                            <th class="align-middle text-start">Pengadaan
                                 <div class="text-muted fw-light" style="font-size: 10px !important">Tanggal - Tahun</div>
                             </th>
                             <th class="align-middle">
@@ -35,14 +37,18 @@
                         @foreach ($result as $key => $v)
                             <tr>
                                 <td style="width: 20px !important">{{ $key = $key + 1 }}</td>
-                                <td>{{ $v->obat_id }}</td>
+                                <td>{{ $v->nama_obat }} <div style="font-size: 11px" class="text-muted">{{ $v->kode_obat }}
+                                    </div>
+                                </td>
                                 <td>{{ $v->kode_batch }}</td>
-                                <td>{{ $v->expired }}</td>
+                                <td class="text-start"><span
+                                        class="badge bg-label-secondary me-1">{{ date('d M Y', strtotime($v->expired)) }}</span>
+                                </td>
                                 <td>{{ $v->jenis }}</td>
                                 <td>{{ $v->keterangan }}</td>
                                 <td>
-                                    <span class="badge bg-label-secondary me-1">{{ $v->tanggal_pengadaan }}</span>
-                                    <span class="badge bg-label-primary me-1">{{ $v->tahun_pengadaan }}</span>
+                                    <span
+                                        class="badge bg-label-secondary me-1">{{ date('d M Y', strtotime($v->tanggal_pengadaan)) }}</span>
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -111,8 +117,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Keterangan <span class="text-danger">*</span></label>
-                            <input type="text" name="keterangan" required="true" class="form-control"
-                                aria-describedby="emailHelp">
+                            <textarea type="text" name="keterangan" required="true" class="form-control" aria-describedby="emailHelp"></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tanggal Pengadaan <span class="text-danger">*</span></label>
@@ -165,7 +170,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Expired </label>
-                            <input type="text" name="expired" id="expired" class="form-control"
+                            <input type="date" name="expired" id="expired" class="form-control"
                                 aria-describedby="emailHelp">
                             {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
                         </div>
@@ -177,12 +182,12 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Keterangan <span class="text-danger">*</span></label>
-                            <input type="text" name="keterangan" id="keterangan" required="true"
-                                class="form-control" aria-describedby="emailHelp">
+                            <textarea type="text" name="keterangan" id="keterangan" required="true" class="form-control"
+                                aria-describedby="emailHelp"></textarea>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Tanggal Pengadaan <span class="text-danger">*</span></label>
-                            <input type="text" name="tanggal_pengadaan" id="tanggal_pengadaan" required="true"
+                            <input type="date" name="tanggal_pengadaan" id="tanggal_pengadaan" required="true"
                                 class="form-control" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">

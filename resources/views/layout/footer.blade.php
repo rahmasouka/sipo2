@@ -5,7 +5,9 @@
             <script>
                 document.write(new Date().getFullYear());
             </script>
-            <a href="/" target="_blank" class="footer-link fw-medium">SIPO @Kota Kupang</a>
+            <a href="/" target="_blank" class="footer-link fw-medium">SIPO @Kota Kupang</a> <a
+                href="https://wa.me/{{ $setting['cs-wa'] ?? '' }}">Hub CS
+                SIPO</a>
         </div>
         <div class="d-none d-lg-inline-block">
             <a href="https://kupangkota.go.id/" class="footer-link me-4" target="_blank">kupangkota.go.id</a>

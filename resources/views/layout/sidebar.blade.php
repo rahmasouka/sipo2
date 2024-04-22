@@ -65,7 +65,7 @@
             </a>
         </li>
         <li class="menu-item {{ $link == 'stok-opname' ? 'active' : '' }}">
-            <a href="/batch" class="menu-link">
+            <a href="/stok-opname" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-package"></i>
                 <div data-i18n="Email">Stok Opname</div>
             </a>
@@ -78,11 +78,28 @@
         </li>
 
         <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Master Setting</span>
+        </li>
+
+        <li class="menu-item {{ $link == 'website-setting' ? 'active' : '' }}">
+            <a href="/website-setting" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-cog"></i>
+                <div data-i18n="Email">Website Setting</div>
+            </a>
+        </li>
+        <li class="menu-item {{ $link == 'user-admin' ? 'active' : '' }}">
+            <a href="/user-admin" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-user"></i>
+                <div data-i18n="Email">User Admin</div>
+            </a>
+        </li>
+
+        <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Laporan</span>
         </li>
 
         <li class="menu-item {{ $link == 'laporan-stok-opname' ? 'active' : '' }}">
-            <a href="/batch" class="menu-link">
+            <a href="/stok-opname" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-report"></i>
                 <div data-i18n="Email">Laporan Stok Opname</div>
             </a>
@@ -99,6 +116,5 @@
                 <div data-i18n="Email">Laporan Master Obat</div>
             </a>
         </li>
-
     </ul>
 </aside>

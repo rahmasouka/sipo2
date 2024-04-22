@@ -5,8 +5,8 @@
         <button class="btn btn-primary btn-xs mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah"
             style="border-radius: 3px; font-size: 10px"><i class="bx bx-plus"></i>
             Tambah</button>
-        <button class="btn btn-secondary btn-xs mb-3" style="border-radius: 3px; font-size: 10px"><i
-                class="bx bx-printer"></i>&nbsp;
+        <button class="btn btn-secondary btn-xs mb-3 btn-cetak" data-namafile="{{ $link . '-' . date('d-m-Y H-i-s') }}"
+            style="border-radius: 3px; font-size: 10px"><i class="bx bx-printer"></i>&nbsp;
             Cetak</button>
         <div class="mb-3">
             <i class="text-danger">*) Input data pelaku pada form berikut ini</i>

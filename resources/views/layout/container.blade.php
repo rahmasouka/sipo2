@@ -37,6 +37,21 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
 
+    {{-- BARCODE --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+        integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .barcode {
+            font-family: "Libre Barcode 128", system-ui;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
     <!-- Page CSS -->
 
     <!-- Helpers -->
@@ -102,6 +117,12 @@
         integrity="sha512-csaTzpLFmF+Zl81hRtaZMsMhaeQDHO8E3gBkN3y3sCX9B1QSut68NxqcrxXH60BXPUQ/GB3LZzzIq9ZrxPAMTg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+        integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
         $('.datatable_init').DataTable({
             language: {
@@ -117,6 +138,45 @@
                 emptyTable: "Tidak ada data",
                 paginate: {},
             }
+        });
+        $('.btn-cetak').click(function() {
+            window.jsPDF = window.jspdf.jsPDF;
+
+            const doc = new jsPDF();
+            const columns = [];
+            const headers = $('.datatable_init thead th');
+            doc.text($(this).data('namafile'), 14, 10);
+            headers.each(function(index) {
+                if (index < headers.length - 1) {
+                    columns.push({
+                        header: $(this).text(),
+                        dataKey: $(this).text().toLowerCase()
+                    });
+                }
+            });
+
+            doc.autoTable({
+                html: '.datatable_init',
+                columns: columns,
+                bodyStyles: {
+                    valign: 'top'
+                },
+                styles: {
+                    overflow: 'linebreak',
+                    cellWidth: 'wrap'
+                },
+                columnStyles: {
+                    text: {
+                        columnWidth: 'auto'
+                    }
+                }
+            });
+            doc.save($(this).data('namafile') + '.pdf');
+        });
+        $(document).ready(function() {
+            $('.select2-init').select2({
+                dropdownParent: $(".modal")
+            });
         });
     </script>
     @stack('script')

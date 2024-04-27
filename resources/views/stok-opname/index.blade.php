@@ -98,9 +98,10 @@
                                 <tr>
                                     <td colspan="3" class="text-end">
                                         <select name="" id="cariBatch" class="select2- form-select">
+                                            <option value="" disabled>Pilih Batch</option>
                                             @foreach ($batch as $item)
                                                 <option value="{{ $item->batch_id }}" id="option_{{ $item->batch_id }}">
-                                                    {{ $item->kode_batch }}
+                                                    {{ $item->kode_batch }} ({{ $item->nama_obat }})
                                                 </option>
                                             @endforeach
                                         </select>
@@ -227,6 +228,9 @@
                         `;
                             $('#option_' + data.batch_id).remove();
                             $('.isianBatch').prepend(body);
+                            $('#cariBatch').val('');
+                            $('#cariBatch option[value=""]').prop('selected', true);
+
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             // Handle errors (jqXHR, textStatus, and errorThrown provide details)

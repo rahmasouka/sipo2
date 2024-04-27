@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Batch;
 use App\Models\Obat;
+use App\Models\StokObat;
 use Illuminate\Http\Request;
 
 class BatchController extends Controller
@@ -56,14 +57,30 @@ class BatchController extends Controller
      */
     public function store(Request $request)
     {
-        Batch::create([
+        $batch = Batch::create([
             'obat_id' => $request->nama_obat,
             'kode_batch' => $request->kode_batch,
             'expired' => $request->expired,
             'jenis' => $request->jenis,
+            'stok_batch' => $request->stok,
             'keterangan' => $request->keterangan,
             'tanggal_pengadaan' => $request->tanggal_pengadaan,
             'tahun_pengadaan' => $request->tahun_pengadaan,
+        ])->getAttributes();
+
+        StokObat::create([
+            'obat_id' => $request->nama_obat,
+            'batch_id' => $batch['batch_id'],
+            'stok' => $request->stok,
+            'detail' => "+",
+            'ket' => "Penambahan batch obat",
+        ]);
+
+        $obat = Obat::find($request->input('nama_obat'));
+        $stok_terkini = $obat->stok_terkini ?? 0;
+
+        Obat::find($request->input('nama_obat'))->update([
+            'stok_terkini' => $stok_terkini + $request->stok
         ]);
 
         return redirect('/batch')->with('success', 'Berhasil disimpan');

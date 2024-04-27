@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminUserController extends Controller
 {
@@ -99,7 +100,7 @@ class AdminUserController extends Controller
         Admin::where(['admin_id' => $id])->update([
             'nama_admin' => $request->input('nama_admin'),
             'email' => $request->input('email'),
-            'password' => $request->input('password'),
+            'password' => Hash::make($request->input('password')),
             'telp' => $request->input('telp'),
             'role' => $request->input('role'),
         ]);

@@ -20,7 +20,7 @@
                             <th class="align-middle">No</th>
                             <th class="align-middle">
                                 Nama Obat
-                                <div class="text-muted fw-light" style="font-size: 10px !important">Satuan/Kode</div>
+                                <div class="text-muted fw-light" style="font-size: 10px !important">Kode</div>
                             </th>
                             <th class="align-middle">Kategori</th>
                             <th class="align-middle">Jenis Obat</th>
@@ -41,14 +41,18 @@
                                 <td>
                                     {{ $v->nama_obat }}
                                     <div style="font-size: 11px" class="text-muted">
-                                        {{ $v->nama_satuan }} - {{ $v->kode_obat }}</div>
+                                        {{ $v->kode_obat }}</div>
                                 </td>
                                 <td>
                                     {{ $v->kategori_obat }}
                                 </td>
                                 <td>{{ $v->jenis_obat ?? '-' }}</td>
                                 <td>{{ $v->merk }}</td>
-                                <td> {!! number_format($v->stok_terkini) !!} </td>
+                                <td class="text-end"> {!! number_format($v->stok_terkini) !!}
+
+                                    <div style="font-size: 11px" class="text-muted">
+                                        {{ $v->nama_satuan }}</div>
+                                </td>
                                 <td>
                                     <span class="badge bg-label-secondary me-1">Rp.
                                         {{ number_format($v->harga_beli) }}</span>

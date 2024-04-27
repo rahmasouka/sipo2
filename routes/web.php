@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/user/login', [AuthController::class, 'userLogin']);
+Route::get('/user/logout', [AuthController::class, 'logout']);
 Route::POST('/login', [AuthController::class, 'authenticate']);
 
 Route::get('/', [DashboardController::class, 'index']);

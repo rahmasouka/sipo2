@@ -49,15 +49,15 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email-username"
+                                <input type="text" class="form-control" id="email" name="email"
                                     placeholder="user@kupangkota.go.id" autofocus />
                             </div>
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
                                     <label class="form-label" for="password">Password</label>
-                                    <a href="https://wa.me/{{ $setting['cs_wa'] ?? '' }}">
+                                    {{-- <a href="https://wa.me/{{ $setting['cs_wa'] ?? '' }}">
                                         <small>Lupa Password?</small>
-                                    </a>
+                                    </a> --}}
                                 </div>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control" name="password"

@@ -36,9 +36,13 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'pelaku' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'pelaku',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admin',
         ],
 
         'api' => [
@@ -66,9 +70,13 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'pelaku' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Pelaku::class,
+        ],
+        'admin' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [

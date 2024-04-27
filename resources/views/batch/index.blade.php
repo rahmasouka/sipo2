@@ -116,6 +116,12 @@
                             {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Stok <span class="text-danger">*</span></label>
+                            <input type="number" name="stok" required="true" class="form-control"
+                                aria-describedby="emailHelp">
+                            {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Keterangan <span class="text-danger">*</span></label>
                             <textarea type="text" name="keterangan" required="true" class="form-control" aria-describedby="emailHelp"></textarea>
                         </div>

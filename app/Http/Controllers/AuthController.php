@@ -17,29 +17,26 @@ class AuthController extends Controller
     }
     public function authenticate(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            return redirect('/');
+        if (Auth::guard('admin')->attempt($credentials)) {
+            return redirect()->intended('/');
         }
-
         return back()->withErrors([
             'email' => 'Akun tidak terdaftar',
         ]);
     }
     public function logout(Request $request)
     {
-        Auth::logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
+        if (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        } else {
+            Auth::guard('pelaku')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
         return redirect('/user/login');
     }
 }

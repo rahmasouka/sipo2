@@ -22,6 +22,7 @@ class Batch extends Migration
             $table->string('expired')->nullable();
             $table->string('jenis')->nullable();
             $table->string('keterangan')->nullable();
+            $table->integer('stok_batch')->nullable();
             $table->dateTime('tanggal_pengadaan')->nullable();
             $table->year('tahun_pengadaan')->nullable();
             $table->timestamps();

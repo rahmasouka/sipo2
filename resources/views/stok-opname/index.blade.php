@@ -20,7 +20,7 @@
                             </th>
                             <th class="align-middle">Jumlah Selisih</th>
                             </th>
-                            <th class="align-middle">
+                            <th class="align-middle text-center">
                                 Aksi
                             </th>
                         </tr>
@@ -32,28 +32,12 @@
                                 <td>
                                     {{ $v->created_at }}
                                 </td>
-                                <td> {!! number_format($v->stok_terkini) !!} </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <span class="dropdown-item edit-button" data-id={{ $v->obat_id }}><i
-                                                    class="bx bx-edit-alt me-1"></i>
-                                                Edit</span>
-                                            <span class="dropdown-item edit-button" data-id={{ $v->obat_id }}><i
-                                                    class="bx bx-printer-alt me-1"></i>
-                                                Cetak</span> <br>
-                                            <span class="dropdown-item hapus-button" data-id="{{ $v->obat_id }}"><i
-                                                    class="bx bx-list me-1"></i>
-                                                List</span>
-                                            <span class="dropdown-item hapus-button" data-id="{{ $v->obat_id }}"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Hapus</span>
-                                        </div>
-                                    </div>
+                                <td> {!! number_format($v->jumlah_selisih) !!} </td>
+                                <td class="text-center">
+                                    <a class="btn btn-primary btn-sm text-white"
+                                        href="/stok-opname/{{ $v->stok_opname_id }}">
+                                        <i class="bx bx-list-ul"></i> List
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -72,10 +56,30 @@
                     <h1 class="modal-title fs-5 fw-bolder" id="exampleModalLabel">Data Obat</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 <form action="/{{ $link }}" method="POST">
                     @csrf
                     @method('POST')
-                    <div class="modal-body">
+                    <div class="modal-body mb-4">
+                        <table style="width: 100%">
+                            <tr>
+                                <td colspan="3">
+                                    <select name="" id="cariBatch" class="select2- form-select">
+                                        <option value="" disabled>Pilih Batch</option>
+                                        @foreach ($batch as $item)
+                                            <option value="{{ $item->batch_id }}" id="option_{{ $item->batch_id }}">
+                                                {{ $item->kode_batch }} ({{ $item->nama_obat }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td colspan="1" class="text-center">
+                                    <button class="btn btn-success btn-sm mx-auto" id="tambahBatch" type="button">
+                                        <i class="bx bx-plus"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -95,23 +99,7 @@
                                 </tr>
                             </thead>
                             <tbody class="table-border-bottom-0 isianBatch">
-                                <tr>
-                                    <td colspan="3" class="text-end">
-                                        <select name="" id="cariBatch" class="select2- form-select">
-                                            <option value="" disabled>Pilih Batch</option>
-                                            @foreach ($batch as $item)
-                                                <option value="{{ $item->batch_id }}" id="option_{{ $item->batch_id }}">
-                                                    {{ $item->kode_batch }} ({{ $item->nama_obat }})
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td colspan="1" class="text-center">
-                                        <button class="btn btn-primary btn-sm mx-auto" id="tambahBatch" type="button">
-                                            <i class="bx bx-plus"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -218,16 +206,27 @@
                         success: function(data) {
                             data = JSON.parse(data)
                             console.log(data);
+                            $('.simpan-row').remove();
                             let body = `
-                            <tr>
+                            <tr class="row-` + data.kode_batch + `">
                                 <td>` + data.kode_batch + `</td>
                                 <td>` + data.nama_obat + `</td>
                                 <td>` + data.stok_terkini + `</td>
-                                <td><input type="number" class="form-control"></td>
+                                <td><input type="number" class="form-control" name="stok_setelah[]"></td>
+                                <input type="hidden" name="batch_id[]" value="` + data.batch_id + `">
+                                <input type="hidden" name="stok_awal[]" value="` + data.stok_terkini + `">
+                            </tr>
+                            <tr class="simpan-row">
+                                <td colspan="4" class="text-end">
+                                    <button class="btn btn-sm btn-primary" type="submit"
+                                        onclick="return confirm('Apakah anda yakin data yang Anda masukkan telah benar secara keseluruhan?')"><i
+                                            class="bx bx-save"></i> Simpan</button>
+                                </td>
                             </tr>
                         `;
+
                             $('#option_' + data.batch_id).remove();
-                            $('.isianBatch').prepend(body);
+                            $('.isianBatch').append(body);
                             $('#cariBatch').val('');
                             $('#cariBatch option[value=""]').prop('selected', true);
 

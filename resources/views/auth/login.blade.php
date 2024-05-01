@@ -42,11 +42,13 @@
                                     <img src="/assets/img/logo.png" width="25px" alt="">
                                 </span>
                                 <span class="app-brand-text demo text-body fw-bold">Sipo</span>
+
                             </a>
                         </div>
-
+                        <h6 class="font-weight-bolder"><b>{{ $subtitle }}</b></h6>
                         <form id="formAuthentication" method="post" action="/login" class="mb-3">
                             @csrf
+                            <input type="hidden" name="jenis_login" value="{{ $subtitle }}">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control" id="email" name="email"

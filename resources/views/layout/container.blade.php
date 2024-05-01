@@ -1,7 +1,24 @@
+@php
+    $nama = '';
+    $role = '';
+    $email = '';
+    $telp = '';
+    if (Auth::guard('admin')->check()) {
+        $nama = Auth::guard('admin')->user()->nama_admin;
+        $email = Auth::guard('admin')->user()->email;
+        $telp = Auth::guard('admin')->user()->telp;
+        $role = 'Admin';
+    } else {
+        $nama = Auth::guard('pelaku')->user()->nama_pelaku;
+        $email = Auth::guard('pelaku')->user()->email;
+        $telp = Auth::guard('pelaku')->user()->kode_pelaku;
+        $role = 'Pelaku';
+    }
+@endphp
 <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
-    data-assets-path="./assets/" data-template="vertical-menu-template-free">
+    data-assets-path="/assets/" data-template="vertical-menu-template-free">
 
 <head>
     <meta charset="utf-8" />
@@ -13,7 +30,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,16 +39,16 @@
         href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet" />
 
-    <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="./assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="./assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.7/sweetalert2.css"
         integrity="sha512-n1PBkhxQLVIma0hnm731gu/40gByOeBjlm5Z/PgwNxhJnyW1wYG8v7gPJDT6jpk0cMHfL8vUGUVjz3t4gXyZYQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -55,10 +72,10 @@
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="./assets/vendor/js/helpers.js"></script>
+    <script src="/assets/vendor/js/helpers.js"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="./assets/js/config.js"></script>
+    <script src="/assets/js/config.js"></script>
 </head>
 
 <body>
@@ -98,19 +115,19 @@
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
 
-    <script src="./assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="./assets/vendor/libs/popper/popper.js"></script>
-    <script src="./assets/vendor/js/bootstrap.js"></script>
-    <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="./assets/vendor/js/menu.js"></script>
+    <script src="/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/vendor/js/bootstrap.js"></script>
+    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="./assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
     <!-- Main JS -->
-    <script src="./assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
     <!-- Page JS -->
-    <script src="./assets/js/dashboards-analytics.js"></script>
+    <script src="/assets/js/dashboards-analytics.js"></script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.10.7/sweetalert2.min.js"

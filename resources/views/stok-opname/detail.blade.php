@@ -1,0 +1,298 @@
+@extends('layout.container')
+@section('content')
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="py-2 mt-2 mb-2"><span class="fw-bolder">{{ $title }}</h4>
+
+        <div class="card p-3 mb-3">
+            <h5>Detail</h5>
+            <table>
+                <tr>
+                    <td>Tanggal Opname</td>
+                    <td>:</td>
+                    <td>{{ $detailOpname->created_at }}</td>
+                </tr>
+                <tr>
+                    <td>Keterangan</td>
+                    <td>:</td>
+                    <td>{{ $detailOpname->keterangan ?? '-' }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card p-3">
+            {{-- <h5 class="card-header">Striped rows</h5> --}}
+            <div class="table-responsive text-nowrap">
+                <table class="table table-striped datatable_init">
+                    <thead>
+                        <tr>
+                            <th class="align-middle">No</th>
+                            <th class="align-middle">
+                                Kode Batch
+                            </th>
+                            <th class="align-middle">Nama Obat</th>
+                            <th class="align-middle text-center">Perubahan Stok
+                                <div class="text-muted fw-light" style="font-size: 10px !important">Per Batch</div>
+                            </th>
+                            <th class="align-middle">Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @foreach ($result as $key => $v)
+                            <tr>
+                                <td style="width: 20px !important">{{ $key = $key + 1 }}</td>
+                                <td>
+                                    {{ $v->kode_batch }}
+                                </td>
+                                <td> {{ $v->nama_obat }} </td>
+                                <td class="text-center"> {{ $v->stok_awal }} <span class="text-muted"><i
+                                            class="bx bx-chevrons-right"></i></span>
+                                    {{ $v->stok_setelah }}</td>
+                                <td>
+                                    {{ $v->keterangan }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--/ Striped Rows -->
+
+    <!-- Modal TAMBAH-->
+    <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 fw-bolder" id="exampleModalLabel">Data Obat</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/{{ $link }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <div class="modal-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="align-middle">
+                                        Kode Batch
+                                    </th>
+                                    <th class="align-middle">
+                                        Nama Obat
+                                    </th>
+                                    </th>
+                                    <th class="align-middle">
+                                        Stok Tercatat
+                                    </th>
+                                    <th class="align-middle">
+                                        Stok Asli
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0 isianBatch">
+                                <tr>
+                                    <td colspan="3" class="text-end">
+                                        <select name="" id="cariBatch" class="select2- form-select">
+                                            <option value="" disabled>Pilih Batch</option>
+                                            @foreach ($batch as $item)
+                                                <option value="{{ $item->batch_id }}" id="option_{{ $item->batch_id }}">
+                                                    {{ $item->kode_batch }} ({{ $item->nama_obat }})
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td colspan="1" class="text-center">
+                                        <button class="btn btn-success btn-sm mx-auto" id="tambahBatch" type="button">
+                                            <i class="bx bx-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal EDIT-->
+    <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 fw-bolder" id="exampleModalLabel">Data Obat</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="form_edit" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <div class="modal-body">
+                        <div class="text-muted mb-2 fw-italic" style="font-size: 13px">*) Tidak boleh dikosongi</div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nama Obat <span class="text-danger">*</span></label>
+                            <input type="text" name="nama_obat" id="nama_obat" required="true" class="form-control"
+                                aria-describedby="emailHelp">
+                            {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Kode Obat <span class="text-danger">*</span></label>
+                            <input type="text" name="kode_obat" id="kode_obat" required="true" class="form-control"
+                                aria-describedby="emailHelp">
+                            {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Jenis Obat </label>
+                            <input type="text" name="jenis_obat" id="jenis_obat" class="form-control"
+                                aria-describedby="emailHelp">
+                            {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Kategori Obat <span class="text-danger">*</span></label>
+                            <input type="text" name="kategori_obat" id="kategori_obat" required="true"
+                                class="form-control" aria-describedby="emailHelp">
+                            {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Satuan <span class="text-danger">*</span></label>
+                            <select name="satuan_obat" id="satuan_obat" class="form-control">
+                                <option value="">Pilih Satuan</option>
+                                @foreach ($satuan as $r)
+                                    <option value="{{ $r->satuan_id }}">{{ $r->nama_satuan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Merek <span class="text-danger">*</span></label>
+                            <input type="text" name="merk" id="merk" required="true" class="form-control"
+                                aria-describedby="emailHelp">
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label class="form-label">Harga Jual <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                    <input type="text" name="harga_jual" id="harga_jual" required="true"
+                                        class="form-control" aria-describedby="emailHelp">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Harga Beli <span class="text-danger">*</span></label>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                    <input type="text" name="harga_beli" id="harga_beli" required="true"
+                                        class="form-control" aria-describedby="emailHelp">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Langsung tambah batch?</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal"><i
+                                class="bx bx-"></i> Tutup</button>
+                        <button type="submit" class="btn btn-sm btn-primary"><i class="bx bx-save"></i> Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@push('script')
+    <script>
+        $('document').ready(function() {
+            $('#tambahBatch').on('click', function() {
+                let batchID = $('#cariBatch').val();
+
+                if (batchID != undefined && batchID != '' && batchID != null) {
+                    $.ajax({
+                        url: "/api/batch/" + batchID, // The URL to send the request to
+                        success: function(data) {
+                            data = JSON.parse(data)
+                            console.log(data);
+                            $('.simpan-row').remove();
+                            let body = `
+                            <tr class="row-` + data.kode_batch + `">
+                                <td>` + data.kode_batch + `</td>
+                                <td>` + data.nama_obat + `</td>
+                                <td>` + data.stok_terkini + `</td>
+                                <td><input type="number" class="form-control" name="stok_setelah[]"></td>
+                                <input type="hidden" name="batch_id[]" value="` + data.batch_id + `">
+                                <input type="hidden" name="stok_awal[]" value="` + data.stok_terkini + `">
+                            </tr>
+                            <tr class="simpan-row">
+                                <td colspan="4" class="text-end">
+                                    <button class="btn btn-sm btn-primary" type="submit"
+                                        onclick="return confirm('Apakah anda yakin data yang Anda masukkan telah benar secara keseluruhan?')"><i
+                                            class="bx bx-save"></i> Simpan</button>
+                                </td>
+                            </tr>
+                        `;
+
+                            $('#option_' + data.batch_id).remove();
+                            $('.isianBatch').prepend(body);
+                            $('#cariBatch').val('');
+                            $('#cariBatch option[value=""]').prop('selected', true);
+
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            // Handle errors (jqXHR, textStatus, and errorThrown provide details)
+                        }
+                    });
+                } else {
+                    return alert('Silahkan pilih kode batch');
+                }
+            });
+            $('.edit-button').on('click', function() {
+                $.ajax({
+                    url: "/{{ $link }}/" + $(this).data('id'),
+                    dataType: "json",
+                    success: function(data) {
+                        // console.log(data.nama_obat);
+                        $('#nama_obat').val(data.nama_obat);
+                        $('#kode_obat').val(data.kode_obat);
+                        $('#jenis_obat').val(data.jenis_obat);
+                        $('#kategori_obat').val(data.kategori_obat);
+                        $('#satuan_obat').val(data.satuan_id);
+                        $('#merk').val(data.merk);
+                        $('#harga_jual').val(data.harga_jual);
+                        $('#harga_beli').val(data.harga_beli);
+                        $('#form_edit').attr('action', "/{{ $link }}/" + data.obat_id);
+                        $('#modalEdit').modal('show');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("Error:", textStatus, errorThrown);
+                    }
+                });
+            });
+            $('.hapus-button').on('click', function() {
+                Swal.fire({
+                    title: "Hapus?",
+                    text: "Data tidak dapat dikembalikan lagi",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Hapus",
+                    cancelButtonText: "Batal"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "/{{ $link }}/hapus/" + $(this).data('id'),
+                            dataType: "json",
+                            success: function(data) {
+                                if (data) {
+                                    window.location.href = "/{{ $link }}";
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    @include('component.alerts')
+@endpush

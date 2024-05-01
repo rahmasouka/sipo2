@@ -38,7 +38,7 @@
                             dan
                             footer website </div>
                     </div>
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label class="form-label">Notifikasi (email/wa) </label>
                         <select type="date" name="notif_toggle" id="notif_toggle" class="form-control"
                             aria-describedby="emailHelp">
@@ -48,7 +48,7 @@
                         </select>
                         <div class="mt-2 text-muted" style="font-size: 12px;">Jika off maka website tidak mengirimkan notif
                             apapun kepada pengguna </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="mt-3">
                     <button class="btn btn-primary float-end mb-3" data-bs-toggle="modal"

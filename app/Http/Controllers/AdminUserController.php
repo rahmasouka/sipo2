@@ -58,7 +58,7 @@ class AdminUserController extends Controller
         Admin::create([
             'nama_admin' => $request->input('nama_admin'),
             'email' => $request->input('email'),
-            'password' => $request->input('password'),
+            'password' => Hash::make($request->input('password')),
             'telp' => $request->input('telp'),
             'role' => $request->input('role'),
         ]);
@@ -100,10 +100,15 @@ class AdminUserController extends Controller
         Admin::where(['admin_id' => $id])->update([
             'nama_admin' => $request->input('nama_admin'),
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
             'telp' => $request->input('telp'),
             'role' => $request->input('role'),
         ]);
+
+        if ($request->input('password')) {
+            Admin::where(['admin_id' => $id])->update([
+                'password' => Hash::make($request->input('password')),
+            ]);
+        }
         return redirect('/user-admin')->with('success', 'Berhasil diedit');
     }
 

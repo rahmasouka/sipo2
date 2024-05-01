@@ -12,6 +12,15 @@ class AuthController extends Controller
     {
         return view('auth.login', [
             'title' => 'Sipo Login Page',
+            'subtitle' => "Administrator",
+            'setting' => Setting::first(),
+        ]);
+    }
+    public function pelakuLogin()
+    {
+        return view('auth.login', [
+            'title' => 'Sipo Login Page | Pelaku',
+            'subtitle' => "Pelaku",
             'setting' => Setting::first(),
         ]);
     }
@@ -19,8 +28,14 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->intended('/');
+        if ($request->input('jenis_login') == 'Administrator') {
+            if (Auth::guard('admin')->attempt($credentials)) {
+                return redirect()->intended('/');
+            }
+        } else {
+            if (Auth::guard('pelaku')->attempt($credentials)) {
+                return redirect()->intended('/');
+            }
         }
         return back()->withErrors([
             'email' => 'Akun tidak terdaftar',

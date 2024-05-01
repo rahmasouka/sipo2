@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pelaku;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PelakuController extends Controller
 {
@@ -58,6 +59,7 @@ class PelakuController extends Controller
         Pelaku::create([
             'nama_pelaku' => $request->nama_pelaku,
             'kode_pelaku' => $request->kode_pelaku,
+            'password' => Hash::make($request->password),
             'hak_akses' => $request->hak_akses ?? '',
             'email' => $request->email,
         ]);
@@ -103,6 +105,12 @@ class PelakuController extends Controller
             'hak_akses' => $request->hak_akses,
             'email' => $request->email,
         ]);
+
+        if ($request->input('password')) {
+            Pelaku::where(['pelaku_id' => $id])->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }
 
         return redirect('/pelaku')->with('success', 'Berhasil diedit');
     }

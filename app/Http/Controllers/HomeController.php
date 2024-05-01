@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
+use App\Models\StokObat;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -41,5 +42,28 @@ class HomeController extends Controller
             ]);
 
         return redirect()->back()->with('success', 'Setting website berasil disimpan');
+    }
+    public function stokLog()
+    {
+        $breadcrumb = [
+            [
+                'link' => '/',
+                'nama' => 'SIPO'
+            ],
+            [
+                'link' => '',
+                'nama' => 'Riwayat Stok'
+            ]
+        ];
+
+        $data = [
+            'title' => 'Riwayat Stok',
+            'link' => 'stok-log',
+            'breadcrumb' => $breadcrumb,
+            'result' => StokObat::join('batch', 'batch.batch_id', 'stok_obat.batch_id')
+                ->join('obat', 'obat.obat_id', 'stok_obat.obat_id')
+                ->orderBy('stok_obat.created_at')->get(['stok_obat.*', 'batch.kode_batch', 'obat.nama_obat', 'obat.kode_obat']),
+        ];
+        return view('master.stoklog', $data);
     }
 }

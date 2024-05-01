@@ -2,11 +2,13 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-2 mt-2 mb-2"><span class="fw-bolder">Data Batch Obat</h4>
-        <button class="btn btn-primary btn-xs mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah"
-            style="border-radius: 3px; font-size: 10px"><i class="bx bx-plus"></i>
-            Tambah</button>
-        <button class="btn btn-secondary btn-xs mb-3" style="border-radius: 3px; font-size: 10px"><i
-                class="bx bx-printer"></i>&nbsp;
+        @if (Auth::guard('admin')->check())
+            <button class="btn btn-primary btn-xs mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah"
+                style="border-radius: 3px; font-size: 10px"><i class="bx bx-plus"></i>
+                Tambah</button>
+        @endif
+        <button class="btn btn-secondary btn-xs mb-3 btn-cetak" data-namafile="{{ $link . '-' . date('d-m-Y H-i-s') }}"
+            style="border-radius: 3px; font-size: 10px"><i class="bx bx-printer"></i>&nbsp;
             Cetak</button>
         <div class="mb-3">
             <i class="text-danger">*) Obat berwarna merah masih belum memiliki batch, mohon diisi</i>
@@ -25,12 +27,15 @@
                             <th class="align-middle text-start">Expired</th>
                             <th class="align-middle text-start">Jenis</th>
                             <th class="align-middle text-start">Keterangan</th>
+                            <th class="align-middle text-start">Jumlah</th>
                             <th class="align-middle text-start">Pengadaan
                                 <div class="text-muted fw-light" style="font-size: 10px !important">Tanggal - Tahun</div>
                             </th>
-                            <th class="align-middle">
-                                aksi
-                            </th>
+                            @if (Auth::guard('admin')->check())
+                                <th class="align-middle">
+                                    aksi
+                                </th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -46,26 +51,29 @@
                                 </td>
                                 <td>{{ $v->jenis }}</td>
                                 <td>{{ $v->keterangan }}</td>
+                                <td>{{ $v->stok_batch }}</td>
                                 <td>
                                     <span
                                         class="badge bg-label-secondary me-1">{{ date('d M Y', strtotime($v->tanggal_pengadaan)) }}</span>
                                 </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <span class="dropdown-item edit-button" data-id={{ $v->batch_id }}><i
-                                                    class="bx bx-edit-alt me-1"></i>
-                                                Edit</span>
-                                            <span class="dropdown-item hapus-button" data-id="{{ $v->batch_id }}"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Hapus</span>
+                                @if (Auth::guard('admin')->check())
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <span class="dropdown-item edit-button" data-id={{ $v->batch_id }}><i
+                                                        class="bx bx-edit-alt me-1"></i>
+                                                    Edit</span>
+                                                <span class="dropdown-item hapus-button" data-id="{{ $v->batch_id }}"><i
+                                                        class="bx bx-trash me-1"></i>
+                                                    Hapus</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
@@ -111,8 +119,12 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Jenis <span class="text-danger">*</span></label>
-                            <input type="text" name="jenis" required="true" class="form-control"
-                                aria-describedby="emailHelp">
+                            <select name="jenis" id="" class="form-select">
+                                <option value="DAU">DAU</option>
+                                <option value="DAK">DAK</option>
+                                <option value="PROGRAM">PROGRAM</option>
+                                <option value="Lain-lain">Lain-lain</option>
+                            </select>
                             {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
                         </div>
                         <div class="mb-3">
@@ -182,8 +194,12 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Jenis <span class="text-danger">*</span></label>
-                            <input type="text" name="jenis" id="jenis" required="true" class="form-control"
-                                aria-describedby="emailHelp">
+                            <select name="jenis" id="jenis" class="form-select">
+                                <option value="DAU">DAU</option>
+                                <option value="DAK">DAK</option>
+                                <option value="PROGRAM">PROGRAM</option>
+                                <option value="Lain-lain">Lain-lain</option>
+                            </select>
                             {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
                         </div>
                         <div class="mb-3">
@@ -226,6 +242,7 @@
                         $('#kode_batch').val(data.kode_batch);
                         $('#expired').val(data.expired);
                         $('#jenis').val(data.jenis);
+                        $('#jenis option[value="' + data.jenis + '"]').attr('selected');
                         $('#keterangan').val(data.keterangan);
                         $('#tanggal_pengadaan').val(data.tanggal_pengadaan);
                         $('#tahun_pengadaan').val(data.tahun_pengadaan);

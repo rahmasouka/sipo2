@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/batch/{id}', [ApiController::class, 'getBatchByID']);
+Route::get('/getPendingRequest', [ApiController::class, 'getPendings']);

@@ -5,9 +5,6 @@
         <button class="btn btn-primary btn-xs mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah"
             style="border-radius: 3px; font-size: 10px"><i class="bx bx-plus"></i>
             Tambah</button>
-        <button class="btn btn-secondary btn-xs mb-3 btn-cetak" data-namafile="{{ $link . '-' . date('d-m-Y H-i-s') }}"
-            style="border-radius: 3px; font-size: 10px"><i class="bx bx-printer"></i>&nbsp;
-            Cetak</button>
 
         <div class="row">
             @foreach ($result as $key => $v)
@@ -72,6 +69,7 @@
                             <label class="form-label">Password <span class="text-danger">*</span></label>
                             <input type="password" name="password" required="true" class="form-control"
                                 aria-describedby="emailHelp">
+                            {{-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> --}}
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Telp <span class="text-danger">*</span></label>
@@ -119,9 +117,10 @@
                                 aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" id="password" required="true" class="form-control"
+                            <label class="form-label">Password </label>
+                            <input type="password" name="password" id="password" class="form-control"
                                 aria-describedby="emailHelp">
+                            <div id="emailHelp" class="form-text">Kosongi jika tidak ingin mengubah password.</div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Telp <span class="text-danger">*</span></label>
@@ -168,7 +167,6 @@
                         // console.log(data.nama_obat);
                         $('#nama_admin').val(data.nama_admin);
                         $('#email').val(data.email);
-                        $('#password').val(data.password);
                         $('#telp').val(data.telp);
                         $('#role').val(data.role);
                         $('#form_edit').attr('action', "/{{ $link }}/" + data

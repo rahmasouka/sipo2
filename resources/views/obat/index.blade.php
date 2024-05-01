@@ -2,9 +2,11 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-2 mt-2 mb-2"><span class="fw-bolder">Data Obat</h4>
-        <button class="btn btn-primary btn-xs mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah"
-            style="border-radius: 3px; font-size: 10px"><i class="bx bx-plus"></i>
-            Tambah</button>
+        @if (Auth::guard('admin')->check())
+            <button class="btn btn-primary btn-xs mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah"
+                style="border-radius: 3px; font-size: 10px"><i class="bx bx-plus"></i>
+                Tambah</button>
+        @endif
         <button class="btn btn-secondary btn-xs mb-3 btn-cetak" data-namafile="{{ $link . '-' . date('d-m-Y H-i-s') }}"
             style="border-radius: 3px; font-size: 10px"><i class="bx bx-printer"></i>&nbsp;
             Cetak</button>
@@ -29,9 +31,11 @@
                             <th class="align-middle">Harga
                                 <div class="text-muted fw-light" style="font-size: 10px !important">Beli - Jual</div>
                             </th>
-                            <th class="align-middle">
-                                aksi
-                            </th>
+                            @if (Auth::guard('admin')->check())
+                                <th class="align-middle">
+                                    aksi
+                                </th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -59,22 +63,24 @@
                                     <span class="badge bg-label-primary me-1">Rp.
                                         {{ number_format($v->harga_jual) }}</span>
                                 </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <span class="dropdown-item edit-button" data-id={{ $v->obat_id }}><i
-                                                    class="bx bx-edit-alt me-1"></i>
-                                                Edit</span>
-                                            <span class="dropdown-item hapus-button" data-id="{{ $v->obat_id }}"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Hapus</span>
+                                @if (Auth::guard('admin')->check())
+                                    <td>
+                                        <div class="dropdown">
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <span class="dropdown-item edit-button" data-id={{ $v->obat_id }}><i
+                                                        class="bx bx-edit-alt me-1"></i>
+                                                    Edit</span>
+                                                <span class="dropdown-item hapus-button" data-id="{{ $v->obat_id }}"><i
+                                                        class="bx bx-trash me-1"></i>
+                                                    Hapus</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

@@ -29,20 +29,6 @@
                 <div data-i18n="Email">Dashboard</div>
             </a>
         </li>
-        @if ($role == 'Pelaku')
-            <li class="menu-item {{ $link == 'lakukan-permintaan' ? 'active' : '' }}">
-                <a href="/lakukan-permintaan" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-vertical-bottom"></i>
-                    <div data-i18n="Email">Lakukan Permintaan</div>
-                </a>
-            </li>
-            {{-- <li class="menu-item {{ $link == 'lakukan-permintaan' ? 'active' : '' }}">
-                <a href="/lakukan-permintaan" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-vertical-bottom"></i>
-                    <div data-i18n="Email">Pengeluaran Obat</div>
-                </a>
-            </li> --}}
-        @endif
 
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Data Master</span>
@@ -67,6 +53,24 @@
                 <a href="/batch" class="menu-link">
                     <i class="menu-icon tf-icons bx bxs-truck"></i>
                     <div data-i18n="Email">Batch</div>
+                </a>
+            </li>
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">
+                    {{ $nama }}
+                </span>
+            </li>
+
+            <li class="menu-item {{ $link == 'lakukan-permintaan' ? 'active' : '' }}">
+                <a href="/lakukan-permintaan" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-vertical-bottom"></i>
+                    <div data-i18n="Email">Lakukan Permintaan</div>
+                </a>
+            </li>
+            <li class="menu-item {{ $link == 'stok-log' ? 'active' : '' }}">
+                <a href="/stok-log" class="menu-link">
+                    <i class="menu-icon tf-icons bx bxs-box"></i>
+                    <div data-i18n="Email">List Obat</div>
                 </a>
             </li>
         @endif

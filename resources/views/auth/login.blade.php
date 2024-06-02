@@ -45,7 +45,11 @@
 
                             </a>
                         </div>
-                        <h6 class="font-weight-bolder"><b>{{ $subtitle }}</b></h6>
+                        <h6 class="font-weight-bolder"><b>{{ $subtitle }}</b>
+                            {!! $subtitle == 'Pelaku'
+                                ? '<a href="/user/login" class="text-primary"><b class="float-end">Ke Login Admin <i class="bx bx-right-arrow-alt"></i></b></a>'
+                                : '<a href="/pelaku/login" class="text-primary"><b class="float-end">Ke Login Pelaku <i class="bx bx-right-arrow-alt"></i></b></a>' !!}
+                        </h6>
                         <form id="formAuthentication" method="post" action="/login" class="mb-3">
                             @csrf
                             <input type="hidden" name="jenis_login" value="{{ $subtitle }}">

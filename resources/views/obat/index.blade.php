@@ -11,7 +11,11 @@
             style="border-radius: 3px; font-size: 10px"><i class="bx bx-printer"></i>&nbsp;
             Cetak</button>
         <div class="mb-3">
-            <i class="text-danger">*) Obat berwarna merah masih belum memiliki batch, mohon diisi</i>
+            @if (Auth::guard('admin')->check())
+                <i class="text-danger">*) Obat berwarna merah masih belum memiliki batch, mohon diisi</i>
+            @else
+                <i class="text-danger">*) Persediaan obat yang dimliiki oleh Dinas Kesehatan</i>
+            @endif
         </div>
         <div class="card p-3">
             {{-- <h5 class="card-header">Striped rows</h5> --}}

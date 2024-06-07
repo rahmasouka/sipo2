@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class PenggunaanObat extends Migration
+class PemakaianObat extends Migration
 {
     /**
      * Run the migrations.
@@ -15,17 +15,17 @@ class PenggunaanObat extends Migration
     public function up()
     {
         DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
-        Schema::create('penggunaan_obat', function (Blueprint $table) {
-            $table->uuid('penggunaan_obat_id')->primary();
+        Schema::create('pemakaian_obat', function (Blueprint $table) {
+            $table->uuid('pemakaian_obat_id')->primary();
             $table->uuid('batch_id');
-            $table->integer('jumlah_permintaan')->nullable();
-            $table->string('status')->nullable();
-            $table->string('keterangan')->nullable();
+            $table->uuid('pelaku_id');
+            $table->integer('terpakai')->nullable();
             $table->string('catatan')->nullable();
+            $table->string('')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
-        DB::statement('ALTER TABLE penggunaan_obat ALTER COLUMN penggunaan_obat_id SET DEFAULT uuid_generate_v4();');
+        DB::statement('ALTER TABLE pemakaian_obat ALTER COLUMN pemakaian_obat_id SET DEFAULT uuid_generate_v4();');
     }
 
     /**
@@ -35,6 +35,6 @@ class PenggunaanObat extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('penggunaan_obat');
+        //
     }
 }

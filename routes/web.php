@@ -9,6 +9,7 @@ use App\Http\Controllers\PelakuController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ListObatController;
 use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\StokOpnameController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,10 @@ Route::get('/website-setting', [HomeController::class, 'websiteSetting'])->middl
 Route::post('/home/setting-save', [HomeController::class, 'simpansetting'])->middleware(['admin']);
 Route::get('/stok-log', [HomeController::class, 'stokLog'])->middleware(['both']);
 
+Route::get('/list-obat', [ListObatController::class, 'index'])->middleware(['pelaku']);
+Route::get('/list-obat-tambah', [ListObatController::class, 'tambah'])->middleware(['pelaku']);
+Route::post('/list-obat-tambah', [ListObatController::class, 'store'])->middleware(['pelaku']);
+Route::get('/list-obat-terpakai', [ListObatController::class, 'terpakai'])->middleware(['pelaku']);
 
 Route::get('/lakukan-permintaan', [PermintaanController::class, 'index'])->middleware(['pelaku']);
 Route::post('/lakukan-permintaan', [PermintaanController::class, 'store'])->middleware(['pelaku']);
@@ -58,3 +63,4 @@ Route::get('/export-stok-opname', [ExportController::class, 'exportStokOpname'])
 Route::get('/export-dau', [ExportController::class, 'exportDau'])->middleware(['admin']);
 Route::get('/export-dak', [ExportController::class, 'exportDak'])->middleware(['admin']);
 Route::get('/export-program', [ExportController::class, 'exportProgram'])->middleware(['admin']);
+Route::get('/export-lplpo', [ExportController::class, 'exportLPLPO'])->middleware(['pelaku']);

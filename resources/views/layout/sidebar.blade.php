@@ -67,8 +67,8 @@
                     <div data-i18n="Email">Lakukan Permintaan</div>
                 </a>
             </li>
-            <li class="menu-item {{ $link == 'stok-log' ? 'active' : '' }}">
-                <a href="/stok-log" class="menu-link">
+            <li class="menu-item {{ $link == 'list-obat' ? 'active' : '' }}">
+                <a href="/list-obat" class="menu-link">
                     <i class="menu-icon tf-icons bx bxs-box"></i>
                     <div data-i18n="Email">List Obat</div>
                 </a>
@@ -164,7 +164,7 @@
                 <span class="menu-header-text">Laporan</span>
             </li>
             <li class="menu-item {{ $link == 'laporan-permintaan' ? 'active' : '' }}">
-                <a href="/lplpo.xlsx" class="menu-link">
+                <a href="/export-lplpo" class="menu-link">
                     <i class="menu-icon tf-icons bx bxs-report"></i>
                     <div data-i18n="Email">LPLPO Puskesmas</div>
                 </a>

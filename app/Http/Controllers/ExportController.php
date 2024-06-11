@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Exports\DauExport;
+use App\Exports\LPLPOExport;
 use App\Exports\StokOpnameExport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -25,5 +27,9 @@ class ExportController extends Controller
     public function exportProgram()
     {
         return Excel::download(new DauExport('PROGRAM'), 'PERBEKALAN OBAT PROGRAM ' . date('d M Y') . '.xlsx');
+    }
+    public function exportLPLPO()
+    {
+        return Excel::download(new LPLPOExport, 'LPLPO EXPORT ' . date('d M Y') . '.xlsx');
     }
 }

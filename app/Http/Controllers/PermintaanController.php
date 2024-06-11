@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Batch;
+use App\Models\ListObatPelaku;
 use App\Models\Obat;
 use App\Models\Permintaan;
 use App\Models\PermintaanDetail;
@@ -132,6 +133,8 @@ class PermintaanController extends Controller
             'keterangan_admin' => $request->keterangan_admin,
         ]);
 
+        $whotfasked = Permintaan::find($id);
+
         if ($request->status_permintaan == 'Diterima') {
             $d = PermintaanDetail::where('permintaan_detail.permintaan_id', $id)->get();
 
@@ -144,6 +147,12 @@ class PermintaanController extends Controller
                 $obat = Obat::where('obat_id', $batch->first()->obat_id);
                 $obat->update([
                     'stok_terkini' => $obat->first()->stok_terkini - $v->jumlah_permintaan,
+                ]);
+
+                ListObatPelaku::create([
+                    'batch_id' => $v->batch_id,
+                    'pelaku_id' => $whotfasked->pelaku_id,
+                    'stok' => $v->jumlah_permintaan
                 ]);
             }
 

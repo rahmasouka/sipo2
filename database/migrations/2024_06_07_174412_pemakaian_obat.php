@@ -21,7 +21,7 @@ class PemakaianObat extends Migration
             $table->uuid('pelaku_id');
             $table->integer('terpakai')->nullable();
             $table->string('catatan')->nullable();
-            $table->string('')->nullable();
+            $table->integer('stok_sebelumnya')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -35,6 +35,6 @@ class PemakaianObat extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('list_obat_pelaku');
     }
 }
